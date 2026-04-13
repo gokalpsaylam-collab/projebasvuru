@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Başvurular · ÇAKÜ Mikro Hibe</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
+
+    <main class="container">
+      <h1 class="section-title">Tüm Başvurular</h1>
+      <p class="section-subtitle">
+        Sisteme iletilen tüm proje başvuruları. Komisyon üyeleri detay sayfasından projeyi
+        inceleyebilir ve değerlendirme yapabilir.
+      </p>
+
+      <div class="filters">
+        <select id="filter-status">
+          <option value="">Tüm Durumlar</option>
+          <option value="basvuruldu">Başvuruldu</option>
+          <option value="on-degerlendirme">Ön Değerlendirme</option>
+          <option value="degerlendirildi">Değerlendirildi</option>
+          <option value="kabul">Kabul</option>
+          <option value="red">Reddedildi</option>
+          <option value="tamamlandi">Tamamlandı</option>
+        </select>
+        <select id="filter-category">
+          <option value="">Tüm Kategoriler</option>
+          <option value="sosyal">Sosyal Sorumluluk</option>
+          <option value="farkindalik">Toplumsal Farkındalık</option>
+          <option value="kalkinma">Yerel Kalkınma</option>
+          <option value="surdurulebilirlik">Sürdürülebilirlik</option>
+          <option value="kultur">Kültür &amp; Sanat</option>
+          <option value="diger">Diğer</option>
+        </select>
+        <input type="text" id="filter-search" placeholder="Proje adı veya başvuru sahibi ara" />
+      </div>
+
+      <div id="alert-area"></div>
+      <div id="app-list" class="app-list">
+        <div class="alert alert-info">Başvurular yükleniyor...</div>
+      </div>
+
+      <!-- Detay alanı (aynı sayfada açılır) -->
+      <section id="detail" class="hidden" style="margin-top: 32px;">
+        <h2 class="section-title">Başvuru Detayı</h2>
+        <div id="detail-content"></div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="js/nav.js"></script>
+    <script src="js/basvurular.js"></script>
+  </body>
+</html>

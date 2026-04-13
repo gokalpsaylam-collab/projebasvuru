@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Değerlendirme · ÇAKÜ Mikro Hibe</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
+
+    <main class="container narrow">
+      <h1 class="section-title">Komisyon Değerlendirme Paneli</h1>
+      <p class="section-subtitle">
+        Değerlendirme kurulu üyeleri bu sayfa üzerinden başvuruları 5 kriter üzerinden
+        puanlar. Her kriter 0–20 puan arasındadır, toplam 100 üzerindendir.
+      </p>
+
+      <div class="form-card">
+        <div class="field">
+          <label for="pick-app">Değerlendirilecek Başvuru</label>
+          <select id="pick-app">
+            <option value="">Yükleniyor...</option>
+          </select>
+          <div class="hint">
+            Seçtiğiniz başvurunun özeti aşağıda görüntülenir. Detay için
+            <a href="basvurular.html">Başvurular</a> sayfasını kullanın.
+          </div>
+        </div>
+      </div>
+
+      <div id="app-summary" class="detail-card hidden" style="margin-top: 18px;"></div>
+
+      <form id="eval-form" class="form-card hidden" style="margin-top: 18px;">
+        <div class="form-section">
+          <h3>Değerlendirici</h3>
+          <div class="field">
+            <label for="evaluator">Komisyon Üyesi Adı *</label>
+            <input type="text" id="evaluator" name="evaluator" required />
+          </div>
+        </div>
+        <div class="form-section">
+          <h3>Puanlama (0–20 arası)</h3>
+          <div class="form-row triple">
+            <div class="field">
+              <label for="innovation">Yenilikçilik</label>
+              <input type="number" id="innovation" min="0" max="20" step="1" value="10" required />
+            </div>
+            <div class="field">
+              <label for="feasibility">Uygulanabilirlik</label>
+              <input type="number" id="feasibility" min="0" max="20" step="1" value="10" required />
+            </div>
+            <div class="field">
+              <label for="impact">Sosyal Etki</label>
+              <input type="number" id="impact" min="0" max="20" step="1" value="10" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="sustainability">Sürdürülebilirlik</label>
+              <input type="number" id="sustainability" min="0" max="20" step="1" value="10" required />
+            </div>
+            <div class="field">
+              <label for="spread">Yaygınlaştırılabilirlik</label>
+              <input type="number" id="spread" min="0" max="20" step="1" value="10" required />
+            </div>
+          </div>
+          <div class="field">
+            <label for="note">Değerlendirme Notu</label>
+            <textarea id="note" placeholder="Güçlü yönler, geliştirilmesi gereken noktalar..."></textarea>
+          </div>
+          <div
+            class="alert alert-info"
+            id="total-preview"
+            style="display:flex;justify-content:space-between;align-items:center;"
+          >
+            <span>Toplam Puan</span>
+            <strong style="font-size:20px;" id="total-val">50</strong>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Değerlendirmeyi Kaydet</button>
+        </div>
+      </form>
+
+      <div id="alert-area" style="margin-top:14px;"></div>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="js/nav.js"></script>
+    <script src="js/degerlendirme.js"></script>
+  </body>
+</html>

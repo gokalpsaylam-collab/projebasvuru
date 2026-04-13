@@ -1,0 +1,24 @@
+{
+  "name": "caku-mikro-hibe",
+  "version": "1.0.0",
+  "description": "ÇAKÜ Mikro Hibe Proje Başvuru Platformu",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "caku",
+    "mikro-hibe",
+    "proje-basvuru",
+    "erasmus"
+  ],
+  "author": "ÇAKÜ TTO",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
