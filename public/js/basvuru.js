@@ -1,4 +1,4 @@
-// Başvuru formu - gönderim mantığı
+// Başvuru formu - gönderim (localStorage tabanlı)
 (function () {
   function showAlert(type, html) {
     const area = document.getElementById('alert-area');
@@ -11,7 +11,7 @@
     const submitBtn = document.getElementById('submit-btn');
     if (!form) return;
 
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
       const fd = new FormData(form);
       const payload = {};
@@ -24,50 +24,35 @@
       const originalText = submitBtn.textContent;
       submitBtn.innerHTML = '<span class="spinner"></span> Gönderiliyor...';
 
-      try {
-        const res = await fetch('/api/applications', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        const data = await res.json();
+      const result = window.CAKUStorage.create(payload);
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
 
-        if (!res.ok) {
-          const missing = (data.missing || [])
-            .map((m) => `<code>${m}</code>`)
-            .join(', ');
-          showAlert(
-            'error',
-            `<strong>Başvuru gönderilemedi.</strong> ${data.error || ''} ${
-              missing ? 'Eksik alanlar: ' + missing : ''
-            }`
-          );
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText;
-          return;
-        }
-
-        form.reset();
-        showAlert(
-          'success',
-          `<strong>Başvurunuz başarıyla alındı.</strong> Başvuru kodunuz:
-          <code>${data.application.id}</code><br/>
-          Ön değerlendirme sonucu e-posta adresinize bildirilecektir.
-          <div style="margin-top:10px;">
-            <a href="basvurular.html" class="btn btn-ghost">Tüm Başvurular</a>
-            <a href="index.html" class="btn btn-ghost">Ana Sayfa</a>
-          </div>`
-        );
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
-      } catch (err) {
+      if (result.error) {
+        const missing = (result.missing || [])
+          .map((m) => `<code>${m}</code>`)
+          .join(', ');
         showAlert(
           'error',
-          '<strong>Bağlantı hatası.</strong> Lütfen daha sonra tekrar deneyin.'
+          `<strong>Başvuru gönderilemedi.</strong> ${result.error || ''} ${
+            missing ? 'Eksik alanlar: ' + missing : ''
+          }`
         );
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
+        return;
       }
+
+      form.reset();
+      showAlert(
+        'success',
+        `<strong>Başvurunuz başarıyla alındı.</strong> Başvuru kodunuz:
+        <code>${result.application.id}</code><br/>
+        Başvurunuz tarayıcınızda saklanmaktadır. Komisyon üyesi
+        "Değerlendirme" sayfası üzerinden projenizi puanlayabilir.
+        <div style="margin-top:10px;">
+          <a href="basvurular.html" class="btn btn-ghost">Tüm Başvurular</a>
+          <a href="index.html" class="btn btn-ghost">Ana Sayfa</a>
+        </div>`
+      );
     });
   });
 })();
