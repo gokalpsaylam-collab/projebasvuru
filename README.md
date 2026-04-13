@@ -39,76 +39,51 @@ Her kriter 0–20 puan, toplam 100 puan üzerinden:
 4. **Sürdürülebilirlik**
 5. **Yaygınlaştırılabilirlik**
 
-## GitHub Pages ile Yayınlama
+## GitHub Pages ile Yayınlama (Actions'sız)
 
-Bu depoda yayınlama iki yoldan yapılabilir.
+Bu depoda tüm statik dosyalar `docs/` klasöründe bulunur; GitHub Pages'i
+doğrudan `main` dalındaki `/docs` klasöründen yayınlamak için:
 
-### Yöntem 1 — GitHub Actions (Önerilen)
+1. GitHub deposunu aç → **Settings** → **Pages**
+2. **Build and deployment → Source**: `Deploy from a branch` seç
+3. **Branch**: `main` / `/docs` seç ve **Save**'e bas
+4. Birkaç dakika içinde site şu adreste yayına girer:
+   `https://gokalpsaylam-collab.github.io/projebasvuru/`
 
-Depoda `.github/workflows/deploy-pages.yml` hazır; sadece Pages'i Actions
-üzerinden çalışacak şekilde ayarlayın:
-
-1. GitHub deposunu açın → **Settings** → **Pages**
-2. **Build and deployment** → **Source**: `GitHub Actions` seçin
-3. Varsayılan `main` (veya geliştirme branch'iniz) dalına push atıldığında
-   workflow otomatik çalışır ve `public/` klasörünü Pages'e deploy eder
-4. Kaç saniye sonra sayfa `https://<kullanıcı>.github.io/projebasvuru/` veya
-   organizasyon için `https://gokalpsaylam-collab.github.io/projebasvuru/`
-   adresinde yayına girer
-
-> Workflow hem `main` hem de `claude/university-funding-platform-vlgCv`
-> branch'ini dinler; varsayılan dalı değiştirirseniz workflow'u da güncelleyin.
-
-### Yöntem 2 — Manuel "Deploy from branch"
-
-1. **Settings** → **Pages** → **Source**: `Deploy from a branch`
-2. Branch: `main` seçin, klasör olarak **`/docs`** seçilmesi gerekir.
-   Bunun için `public/` içeriğini deponun kökündeki `docs/` klasörüne
-   kopyalayın veya sembolik bağ oluşturun.
-3. Alternatif olarak `gh-pages` isminde bir dal oluşturup `public/` içeriğini
-   oraya push edebilirsiniz.
+> `docs/.nojekyll` dosyası zaten mevcut olduğu için GitHub Pages Jekyll
+> işlemi yapmaz, dosyalar olduğu gibi servis edilir.
 
 ### Yerel Test
 
-Sunucuya gerek olmadan `public/index.html` dosyasını çift tıklayarak
-tarayıcıda açabilirsiniz. Python kullanıyorsanız:
+Sunucuya gerek olmadan `docs/index.html` dosyasını çift tıklayarak
+tarayıcıda açabilirsin. Veya Python kullanıyorsan:
 
 ```bash
-cd public
+cd docs
 python3 -m http.server 8080
 ```
 
-Ardından `http://localhost:8080` adresini açın.
+Ardından `http://localhost:8080` adresini aç.
 
 ## Veri Saklama
 
 > ⚠️ **Önemli:** Statik (GitHub Pages) modunda veriler kullanıcının
 > tarayıcısındaki `localStorage`'da saklanır ve **cihazlar arasında
 > senkronize olmaz**. Paylaşılan veri deposu gerekli ise aşağıdaki
-> Express backend seçeneğini kullanın.
+> Express backend seçeneğini kullan.
 
 Konsoldan veri dışa/içe aktarımı:
 
 ```js
-// Dışa aktarım (JSON string)
-copy(CAKUStorage.exportData())
-
-// İçe aktarım
-CAKUStorage.importData(jsonString)
-
-// Hepsini temizle
-CAKUStorage.clearAll()
+copy(CAKUStorage.exportData())   // Dışa aktar
+CAKUStorage.importData(jsonStr)  // İçe aktar
+CAKUStorage.clearAll()           // Temizle
 ```
 
 ## (Opsiyonel) Express Backend ile Kullanım
 
 Çok kullanıcılı paylaşılan bir sunucu isterseniz projeyle birlikte gelen
-Express.js sunucusunu çalıştırabilirsiniz. Bu durumda frontend otomatik
-olarak `localStorage`'ı kullanmaya devam eder; paylaşılan depolama için
-sayfa JS'lerini REST uç noktalarına bağlamanız gerekir (geçmiş Git
-commit'lerinde `fetch` tabanlı sürüm bulunur).
-
-Gereksinim: Node.js 18+
+Express.js sunucusunu çalıştırabilirsiniz. Gereksinim: Node.js 18+
 
 ```bash
 npm install
@@ -133,9 +108,7 @@ npm start   # http://localhost:3000
 projebasvuru/
 ├── server.js                # Opsiyonel Express backend
 ├── package.json
-├── .github/workflows/
-│   └── deploy-pages.yml     # GitHub Pages otomatik deploy
-└── public/                  # GitHub Pages'e yüklenen statik site
+└── docs/                    # GitHub Pages bu klasörden servis edilir
     ├── .nojekyll            # Jekyll işlemeyi devre dışı bırakır
     ├── index.html           # Ana sayfa
     ├── basvuru.html         # Başvuru formu
