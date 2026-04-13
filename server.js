@@ -40,7 +40,7 @@ function genId() {
 
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'docs')));
 
 // Sağlık kontrolü
 app.get('/api/health', (req, res) => {
@@ -263,7 +263,7 @@ app.get('/api/stats', (req, res) => {
 
 // SPA fallback için temel rotalar - public'teki html dosyalarına yönlendir
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'docs', 'index.html'));
 });
 
 app.listen(PORT, () => {
