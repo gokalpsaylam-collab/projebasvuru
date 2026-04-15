@@ -45,7 +45,7 @@
             }
           </div>
         </div>
-        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <div class="app-item-actions">
           <span class="badge badge-${a.status}">${window.CAKU.statusLabel(a.status)}</span>
           <button class="btn btn-ghost" data-id="${a.id}">Detay</button>
         </div>
